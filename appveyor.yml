@@ -12,7 +12,9 @@ install:
   - docker version
 
 build_script:
-  - ps: docker build -t mpromonet/dockertest .
+  - ps: echo "$env:PLATFORM"
+  - sh: docker build -t mpromonet/dockertest . -f Dockerfile.linux
+  - cmd: docker build -t mpromonet/dockertest . -f Dockerfile.windows
 
 deploy_script:
   - ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
