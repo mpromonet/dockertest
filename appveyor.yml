@@ -17,5 +17,5 @@ build_script:
   - cmd: docker build -t mpromonet/dockertest . -f Dockerfile.windows
 
 deploy_script:
-  - ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS" 2>&1
   - ps: docker push mpromonet/dockertest
