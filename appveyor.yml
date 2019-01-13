@@ -1,0 +1,19 @@
+version: 1.0.{build}
+image: 
+- Ubuntu
+- Visual Studio 2017
+
+environment:
+  DOCKER_USER:
+    secure: x9TrGhfASxIJGqdfTG6LHg==
+  DOCKER_PASS:
+    secure: 8A704idfyG3NBIoN4mx5VmOukFzwSphXRHpzuCdPc3E=
+install:
+  - docker version
+
+build_script:
+  - docker build -t mpromonet/dockertest:"$env:PLATFORM" .
+
+deploy_script:
+  - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - docker push mpromonet/dockertest:"$env:PLATFORM"
