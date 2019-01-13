@@ -12,8 +12,8 @@ install:
   - docker version
 
 build_script:
-  - docker build -t mpromonet/dockertest:"$env:PLATFORM" .
+  - ps: docker build -t mpromonet/dockertest:"$env:PLATFORM" .
 
 deploy_script:
-  - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
-  - docker push mpromonet/dockertest:"$env:PLATFORM"
+  - ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - ps: docker push mpromonet/dockertest:"$env:PLATFORM"
