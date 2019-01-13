@@ -1,4 +1,4 @@
-image: docker:stable
+image: gitlab/gitlab-runner:latest
 services:
   - docker:dind
 
