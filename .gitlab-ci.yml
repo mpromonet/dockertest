@@ -14,8 +14,8 @@ before_script:
 build:
   stage: build
   script:
-          - docker build -t ${IMAGE_TAG}:windows . -f Dockerfile.windows
-          - docker push ${IMAGE_TAG}:windows
-          - docker build -t ${IMAGE_TAG}:linux . -f Dockerfile.linux
-          - docker push ${IMAGE_TAG}:linux
+          - docker build -t ${IMAGE_TAG}-windows . -f Dockerfile.windows
+          - docker push ${IMAGE_TAG}-windows
+          - docker build -t ${IMAGE_TAG}-linux . -f Dockerfile.linux
+          - docker push ${IMAGE_TAG}-linux
 
