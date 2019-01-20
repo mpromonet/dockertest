@@ -39,6 +39,8 @@ jobs:
             sudo docker manifest annotate $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest-arm32v7 --os linux --arch arm --variant v7
             sudo docker manifest push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest -p
 
+workflows:
+  version: 2
   docker:
     jobs:
       - publish_docker_linuxamd64:
