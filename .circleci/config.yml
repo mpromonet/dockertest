@@ -1,8 +1,6 @@
 version: 2
 jobs:
   publish_docker_linuxamd64:
-    machine:
-      docker_layer_caching: true
     steps:
       - checkout  
       - run:
@@ -12,8 +10,6 @@ jobs:
             docker push $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest-amd64
 
   publish_docker_linuxarm32v7:
-    machine:
-      docker_layer_caching: true
     steps:
       - checkout  
       - run:
@@ -24,7 +20,7 @@ jobs:
 
   publish_docker_multiarch:
     machine:
-      docker_layer_caching: true
+      image: circleci/classic:201808-01
     steps:
       - run:
           command: |
