@@ -1,0 +1,2 @@
+FROM balenalib/rpi-raspbian
+CMD echo "Hello World from RPI"
