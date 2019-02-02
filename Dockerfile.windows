@@ -5,10 +5,11 @@ SHELL ["powershell"]
 ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\\Downloads\\vs_buildtools.exe
 
 RUN C:\\Downloads\\vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --add Microsoft.VisualStudio.Workload.NetCoreBuildTools --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.WebBuildTools --quiet --wait
-RUN SET "PATH=%PATH%;%ProgramFiles(x86)%\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin"
+RUN $env:Path += ";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin"
 
 # Install Chocolatey
-RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+RUN $env:Path += ";%ALLUSERSPROFILE%\chocolatey\bin"
 
 # Install Chocolatey packages
 RUN choco install git.install -y 
@@ -16,7 +17,7 @@ RUN choco install git.install -y
 RUN git clone https://github.com/mpromonet/webrtc-streamer 
 
 RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\\Downloads\\depot_tools 
-RUN SETX /M Path "%Path%;C:\\Downloads\\depot_tools"
+RUN $env:Path += ";C:\\Downloads\\depot_tools"
 
 RUN cd /d c:/webrtc \
 	&& fetch --no-history --nohooks webrtc \
@@ -33,8 +34,8 @@ RUN mkdir C:/app && tar xvzf webrtc-streamer*.tar.gz --strip=1 -C C:/app/ \
 # run
 FROM  microsoft/nanoserver
 
-WORKDIR /app
-COPY --from=builder /app/ /app/
+WORKDIR C:/app
+COPY --from=builder C:/app/ C:/app/
 
 EXPOSE 8000
 
