@@ -12,7 +12,7 @@ RUN iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.or
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
-RUN choco install git.install 7zip.install python2.install -y 
+RUN choco install git 7zip python2 -y 
 
 RUN git clone https://github.com/mpromonet/webrtc-streamer 
 RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\\Downloads\\depot_tools 
