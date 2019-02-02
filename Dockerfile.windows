@@ -7,10 +7,10 @@ RUN iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.or
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
-RUN choco install git 7zip python2 visualcpp-build-tools -y 
+RUN choco install git 7zip python2 visualcpp-build-tools cmake -y 
 
 # install WebRTC 
-ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\depot_tools
+ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Downloads\\depot_tools\", [EnvironmentVariableTarget]::Machine)
 RUN mkdir c:/webrtc ; cd c:/webrtc ; fetch --no-history --nohooks webrtc ; gclient sync 
 	
