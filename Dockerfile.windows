@@ -1,20 +1,34 @@
-FROM lukaslansky/visualstudio-netwebworkload
-WORKDIR /webrtc-streamer
-
+FROM microsoft/windowsservercore
+WORKDIR C:/webrtc-streamer
 SHELL ["powershell"]
+
+ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\\Downloads\\vs_buildtools.exe
+
+RUN C:\\Downloads\\vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --add Microsoft.VisualStudio.Workload.NetCoreBuildTools --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.WebBuildTools --quiet --wait
+RUN SETX /M Path "%Path%;C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin"
+
+# Install Chocolatey
+RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
+# Install Chocolatey packages
+RUN choco install git.install -y 
+
 RUN git clone https://github.com/mpromonet/webrtc-streamer 
 
-RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git /webrtc/depot_tools \
-	&& export PATH=/webrtc/depot_tools:$PATH \
-	&& cd /webrtc \
+RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\\Downloads\\depot_tools 
+RUN SETX /M Path "%Path%;C:\\Downloads\\depot_tools"
+
+RUN cd /d c:/webrtc \
 	&& fetch --no-history --nohooks webrtc \
-	&& gclient sync \
-	&& cd /webrtc-streamer \
+	&& gclient sync 
+	
+RUN cd /d C:/webrtc-streamer \
 	&& cmake -G "Visual Studio 15 2017 Win64" . \
 	&& msbuild INSTALL.vcxproj /p:Configuration=Release /p:Platform=x64 \
-	&& cpack \
-	&& mkdir /app && tar xvzf webrtc-streamer*.tar.gz --strip=1 -C /app/ \
-	&& rmdir /s /q /webrtc-streamer 
+	&& cpack 
+	
+RUN mkdir C:/app && tar xvzf webrtc-streamer*.tar.gz --strip=1 -C C:/app/ \
+	&& rmdir /s /q C:/webrtc-streamer 
 
 # run
 FROM  microsoft/nanoserver
