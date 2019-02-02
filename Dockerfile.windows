@@ -8,7 +8,7 @@ RUN C:\\Downloads\\vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBui
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey
-RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+RUN iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
