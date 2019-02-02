@@ -13,12 +13,13 @@ RUN mkdir c:\depot_tools && cd c:\depot_tools && 7z x C:\Downloads\depot_tools.z
 RUN systeminfo
 RUN python -V
 RUN powershell $PSVersionTable.PSVersion
+RUN powershell [System.IntPtr]::Size 
 
 RUN gclient --version
-RUN dir /s /b C:\depot_tools
 RUN update_depot_tools 
-RUN dir /s /b C:\depot_tools
 RUN cipd_bin_setup 
+RUN wget "https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&version=git_revision:6e4acf51a635665e54acaceb8bd073e5c7b8259a" -O C:\depot_tools\.cipd_client.exe
+
 RUN dir /s /b C:\depot_tools
 
 RUN setx DEPOT_TOOLS_WIN_TOOLCHAIN 0
