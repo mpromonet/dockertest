@@ -1,19 +1,20 @@
 FROM microsoft/windowsservercore
-WORKDIR C:/webrtc-streamer
 SHELL ["powershell"]
 
 # Install Chocolatey
 RUN iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
+#RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
 RUN choco install git 7zip python2 visualcpp-build-tools cmake -y 
 
 # install WebRTC 
-ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\
+ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\depot_tools.zip
+RUN C:\\Downloads\\; 7z x C:\\Downloads\\depot_tools.zip
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Downloads\\depot_tools\", [EnvironmentVariableTarget]::Machine)
 RUN mkdir c:/webrtc ; cd c:/webrtc ; fetch --no-history --nohooks webrtc ; gclient sync 
 	
+WORKDIR C:/webrtc-streamer
 RUN git clone https://github.com/mpromonet/webrtc-streamer
 RUN cmake -G "Visual Studio 15 2017 Win64" . ; msbuild INSTALL.vcxproj /p:Configuration=Release /p:Platform=x64 ; cpack 
 	
