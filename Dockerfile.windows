@@ -12,11 +12,9 @@ RUN iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.or
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
-RUN choco install git.install -y 
-RUN choco install 7zip.install -y
+RUN choco install git.install 7zip.install python2.install -y 
 
 RUN git clone https://github.com/mpromonet/webrtc-streamer 
-
 RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\\Downloads\\depot_tools 
 RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Downloads\\depot_tools\", [EnvironmentVariableTarget]::Machine)
 
@@ -26,13 +24,3 @@ RUN cmake -G "Visual Studio 15 2017 Win64" . ; msbuild INSTALL.vcxproj /p:Config
 	
 RUN mkdir C:/app ; cd C:/app ; 7z x C:/webrtc-streamer/webrtc-streamer*.tar.gz -so | 7z x -aoa -ttar -si  
 
-# run
-FROM  microsoft/nanoserver
-
-WORKDIR C:/app
-COPY --from=builder C:/app/ C:/app/
-
-EXPOSE 8000
-
-ENTRYPOINT [ "webrtc-streamer.exe" ]
-CMD [ "-a", "-C", "config.json", "screen://" ]
