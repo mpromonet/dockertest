@@ -4,7 +4,7 @@ FROM microsoft/windowsservercore
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 # Install Chocolatey packages
-RUN choco install git 7zip python visualcpp-build-tools cmake wget -y 
+RUN choco install git 7zip python2 visualcpp-build-tools cmake wget curl -y 
 
 # install WebRTC 
 ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\depot_tools.zip
