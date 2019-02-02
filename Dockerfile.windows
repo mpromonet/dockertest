@@ -5,11 +5,11 @@ SHELL ["powershell"]
 ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\\Downloads\\vs_buildtools.exe
 
 RUN C:\\Downloads\\vs_buildtools.exe --add Microsoft.VisualStudio.Workload.MSBuildTools --add Microsoft.VisualStudio.Workload.NetCoreBuildTools --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.WebBuildTools --quiet --wait
-RUN [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin", [EnvironmentVariableTarget]::Machine)
+RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey
 RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
-RUN [Environment]::SetEnvironmentVariable("Path", $env:Path + ";%ALLUSERSPROFILE%\chocolatey\bin", [EnvironmentVariableTarget]::Machine)
+RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";%ALLUSERSPROFILE%\chocolatey\bin\", [EnvironmentVariableTarget]::Machine)
 
 # Install Chocolatey packages
 RUN choco install git.install -y 
@@ -18,7 +18,7 @@ RUN choco install 7zip.install -y
 RUN git clone https://github.com/mpromonet/webrtc-streamer 
 
 RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\\Downloads\\depot_tools 
-RUN [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\\Downloads\\depot_tools", [EnvironmentVariableTarget]::Machine)
+RUN [Environment]::SetEnvironmentVariable(\"Path\", $env:Path + \";C:\\Downloads\\depot_tools\", [EnvironmentVariableTarget]::Machine)
 
 RUN cd /d c:/webrtc \
 	&& fetch --no-history --nohooks webrtc \
