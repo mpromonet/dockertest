@@ -4,14 +4,15 @@ FROM microsoft/windowsservercore
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 # Install Chocolatey packages
-RUN choco install git 7zip python2 pip visualcpp-build-tools cmake wget -y --allow-empty-checksums
+RUN choco install git 7zip python2 powershell visualcpp-build-tools cmake wget -y 
 
 # install WebRTC 
-RUN git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git C:\depot_tools && SETX PATH "%PATH%;C:\depot_tools"
+ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\depot_tools.zip
+RUN mkdir c:\\depot_tools && cd c:\\depot_tools && 7z x C:\\Downloads\\depot_tools.zip && SETX PATH "%PATH%;C:\depot_tools"
 RUN gclient --version
 RUN dir /s /b C:\depot_tools
 RUN setx DEPOT_TOOLS_WIN_TOOLCHAIN 0
-RUN mkdir c:\webrtc && cd c:\webrtc && fetch webrtc --no-history --nohooks
+RUN mkdir c:\webrtc && cd c:\webrtc && fetch --no-history --nohooks webrtc 
 RUN gclient sync
 	
 RUN git clone https://github.com/mpromonet/webrtc-streamer C:\webrtc-streamer
