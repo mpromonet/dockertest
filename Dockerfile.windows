@@ -1,4 +1,4 @@
-FROM microsoft/windowsservercore
+FROM microsoft/windowsservercore:1803
 
 # Install Chocolatey
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
@@ -18,7 +18,7 @@ RUN powershell [System.IntPtr]::Size
 RUN gclient --version
 RUN update_depot_tools 
 RUN powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "C:\depot_tools\cipd.ps1" -CipdBinary "C:\depot_tools\.cipd_client.exe" -BackendURL "https://chrome-infra-packages.appspot.com" -VersionFile "C:\depot_tools\cipd_client_version" 
-RUN wget "https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&version=git_revision:6e4acf51a635665e54acaceb8bd073e5c7b8259a" -O C:\depot_tools\.cipd_client.exe
+RUN wget "https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&version=git_revision:6e4acf51a635665e54acaceb8bd073e5c7b8259a" -O C:\depot_tools\.cipd_client.exe -k
 
 RUN dir /s /b C:\depot_tools
 
