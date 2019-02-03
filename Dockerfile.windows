@@ -18,7 +18,7 @@ RUN powershell [System.IntPtr]::Size
 RUN gclient --version
 RUN update_depot_tools 
 RUN powershell -NoProfile -ExecutionPolicy RemoteSigned -Command "C:\depot_tools\cipd.ps1" -CipdBinary "C:\depot_tools\.cipd_client.exe" -BackendURL "https://chrome-infra-packages.appspot.com" -VersionFile "C:\depot_tools\cipd_client_version" 
-RUN wget "https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&version=git_revision:6e4acf51a635665e54acaceb8bd073e5c7b8259a" -O C:\depot_tools\.cipd_client.exe -k
+RUN wget "https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&https://chrome-infra-packages.appspot.com/client?platform=windows-amd64&version=git_revision:6e4acf51a635665e54acaceb8bd073e5c7b8259a" -O C:\depot_tools\.cipd_client.exe --no-check-certificate
 
 RUN dir /s /b C:\depot_tools
 
