@@ -1,5 +1,8 @@
 FROM microsoft/windowsservercore:latest
 
+RUN systeminfo
+RUN powershell [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+
 # Install Chocolatey
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
@@ -9,11 +12,6 @@ RUN choco install git 7zip python2 visualcpp-build-tools cmake wget curl -y
 # install WebRTC 
 ADD https://storage.googleapis.com/chrome-infra/depot_tools.zip C:\\Downloads\\depot_tools.zip
 RUN mkdir c:\depot_tools && cd c:\depot_tools && 7z x C:\Downloads\depot_tools.zip && SETX PATH "%PATH%;C:\depot_tools"
-
-RUN systeminfo
-RUN python -V
-RUN powershell $PSVersionTable.PSVersion
-RUN powershell [System.IntPtr]::Size 
 
 RUN gclient --version
 RUN update_depot_tools 
