@@ -1,7 +1,7 @@
 FROM microsoft/windowsservercore:latest
 
 RUN systeminfo
-RUN powershell [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+RUN powershell [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
 
 # Install Chocolatey
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
