@@ -4,11 +4,11 @@ windows_build:
     os_version: 2019
 
   task:
-    script: docker build -t mpromonet/dockertest:windows . -f Dockerfile.windows
+    script: docker build --privileged -t mpromonet/dockertest:windows . -f Dockerfile.windows
     
 linux_build:
   container:
     image: docker
     
   task:  
-    script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
+    script: docker build --privileged -t mpromonet/dockertest:linux . -f Dockerfile.linux
