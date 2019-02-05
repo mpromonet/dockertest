@@ -8,7 +8,7 @@ windows_build:
     
 linux_build:
   container:
-    image: openjdk:8-jdk
+    image: docker
     
   task:  
     script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
