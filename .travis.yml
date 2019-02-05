@@ -2,5 +2,7 @@ os:
   - linux
   - windows
 
+language: c
+
 script:
   - docker build -t mpromonet/dockertest:$TRAVIS_OS_NAME . -f Dockerfile.$TRAVIS_OS_NAME
