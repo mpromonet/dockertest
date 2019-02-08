@@ -6,4 +6,4 @@ language: c
 
 script:
   - docker info
-  - travis_wait 30 docker build -t mpromonet/dockertest:$TRAVIS_OS_NAME . -f Dockerfile.$TRAVIS_OS_NAME
+  - docker build -t mpromonet/dockertest:$TRAVIS_OS_NAME . -f Dockerfile.$TRAVIS_OS_NAME
