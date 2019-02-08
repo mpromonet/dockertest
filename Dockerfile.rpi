@@ -2,7 +2,7 @@ FROM debian as builder
 WORKDIR /build
 COPY . /build
 
-RUN apt-get update && apt-get install --no-install-recommends -y make cmake gcc-arm-linux-gnueabihf \
+RUN apt-get update && apt-get install --no-install-recommends -y make cmake g++-arm-linux-gnueabihf \
     && cmake . -DCMAKE_SYSTEM_PROCESSOR=armv7l -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY  \
     && make
 
