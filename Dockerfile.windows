@@ -1,10 +1,10 @@
 FROM microsoft/dotnet-framework
 
 RUN [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
-RUN -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 RUN choco install -y --no-progress cmake 
-RUN choco install -y --no-progress visualstudio2017buildtools --package-parameters "--installPath C:\BuildTools --add Microsoft.VisualStudio.Workload.VCTools" 
+RUN choco install -y --no-progress visualstudio2017buildtools --package-parameters "--installPath C:/BuildTools --add Microsoft.VisualStudio.Workload.VCTools" 
 
 WORKDIR C:/build
 COPY . C:/build
