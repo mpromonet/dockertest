@@ -1,8 +1,10 @@
 windows_build:
   windows_container:
-    image: cirrusci/windowsservercore
+    image: cirrusci/windowsservercore:2019
+    os_version: 2019
   task:
     script: docker build -t mpromonet/dockertest:windows . -f Dockerfile.windows
-    
-docker_builder:
-  build_script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
+
+linux_build:    
+  docker_builder:
+    build_script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
