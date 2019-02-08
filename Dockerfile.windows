@@ -1,16 +1,15 @@
 FROM microsoft/dotnet-framework
-SHELL ["cmd", "/S", "/C"]
 
-RUN powershell [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
-RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+RUN [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+RUN -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
-RUN choco install cmake -y 
-RUN choco install visualstudio2017buildtools --package-parameters "--installPath C:\BuildTools --add Microsoft.VisualStudio.Workload.VCTools" -y
+RUN choco install -y --no-progress cmake 
+RUN choco install -y --no-progress visualstudio2017buildtools --package-parameters "--installPath C:\BuildTools --add Microsoft.VisualStudio.Workload.VCTools" 
 
-WORKDIR C:\build
-COPY . C:\build
+WORKDIR C:/build
+COPY . C:/build
 
-RUN call C:\BuildTools\Common7\Tools\VsDevCmd.bat && cmake -G "Visual Studio 15 2017 Win64" . && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
+RUN C:/BuildTools/Common7/Tools/VsDevCmd.bat ; cmake -G "Visual Studio 15 2017 Win64" . ; msbuild hello.sln /p:Configuration=Release /p:Platform=x64
 
-ENTRYPOINT [ "/build/hello.exe" ]
+ENTRYPOINT [ "C:/build/hello.exe" ]
 
