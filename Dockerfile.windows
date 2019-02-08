@@ -1,4 +1,4 @@
-FROM microsoft/windowsservercore:latest
+FROM microsoft/windowsservercore:1803 
 
 RUN systeminfo
 RUN powershell [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
