@@ -4,8 +4,5 @@ windows_build:
   task:
     script: docker build -t mpromonet/dockertest:windows . -f Dockerfile.windows
     
-linux_build:
-  container:
-    image: docker
-  task:  
-    script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
+docker_builder:
+  build_script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
