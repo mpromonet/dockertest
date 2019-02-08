@@ -1,2 +1,12 @@
-FROM alpine:latest
-CMD echo "Hello World from Linux"
+FROM debian as builder
+WORKDIR /build
+COPY . /build
+
+RUN apt-get update && apt-get install --no-install-recommends -y make cmake g++ \
+    && cmake . \
+    && make
+
+FROM debian
+WORKDIR /app
+COPY --from=builder /build/hello /app/
+ENTRYPOINT [ "/app/hello" ]
