@@ -4,16 +4,14 @@ SHELL ["powershell"]
 RUN [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
 RUN Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-RUN choco install -y --no-progress cmake 
-RUN choco install -y --no-progress visualstudio2017buildtools visualstudio2017-workload-vctools
-RUN Get-ChildItem -Recurse -Name 'C:\Program Files (x86)' 
+RUN choco install -y --no-progress cmake visualstudio2017buildtools visualstudio2017-workload-vctools
+RUN Get-ChildItem -Recurse -Name 'C:\Program Files (x86)\Microsoft Visual Studio\2017' 
 
 WORKDIR C:/build
 COPY . C:/build
 
-RUN C:/BuildTools/Common7/Tools/VsDevCmd.bat 
-RUN cmake -G "Visual Studio 15 2017 Win64" . 
-RUN msbuild hello.sln /p:Configuration=Release /p:Platform=x64
+SHELL ["cmd", "/S", "/C"]
+RUN call C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat && cmake -G "Visual Studio 15 2017 Win64" . && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
 
 ENTRYPOINT [ "C:/build/hello.exe" ]
 
