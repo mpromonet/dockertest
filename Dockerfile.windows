@@ -8,6 +8,7 @@ WORKDIR C:/build
 COPY . C:/build
 
 SHELL ["cmd", "/S", "/C"]
+RUN dir /s /b C:\BuildTools 
 RUN call "C:\BuildTools\VC\Auxiliary\Build\vcvars64.bat" && cmake -G "Visual Studio 15 2017 Win64" . && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
 
 ENTRYPOINT [ "C:/build/hello.exe" ]
