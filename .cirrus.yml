@@ -1,8 +1,6 @@
-windows_build:
-  docker_builder:
-    platform: windows
-    build_script: docker build -t mpromonet/dockertest:windows . -f Dockerfile.windows
-
-linux_build:    
-  docker_builder:
-    build_script: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
+windows_docker_builder:
+  platform: windows
+  script: docker build -t $CIRRUS_REPO_FULL_NAME:windows . -f Dockerfile.windows
+  
+linux_docker_builder:
+  script: docker build -t $CIRRUS_REPO_FULL_NAME:linux . -f Dockerfile.linux
