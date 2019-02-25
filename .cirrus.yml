@@ -1,6 +1,6 @@
 windows_docker_builder:
   platform: windows
-  script: docker build -t $CIRRUS_REPO_FULL_NAME:windows . -f Dockerfile.windows
+  script: docker build -t %CIRRUS_REPO_FULL_NAME%:windows . -f Dockerfile.windows
   
 linux_docker_builder:
   script: docker build -t $CIRRUS_REPO_FULL_NAME:linux . -f Dockerfile.linux
