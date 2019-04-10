@@ -7,7 +7,6 @@ RUN choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=User' \
 WORKDIR C:/build
 COPY . C:/build
 
-RUN dir /s /b C:\BuildTools 
 RUN call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat" \
      && cmake -G "Visual Studio 15 2017 Win64" . \
      && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
