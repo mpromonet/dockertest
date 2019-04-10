@@ -1,15 +1,16 @@
-FROM vsundin/buildtools2017native
-SHELL ["powershell"]
+FROM  microsoft/windowsservercore
 
-RUN Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-RUN choco install -y --no-progress cmake
+RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin" 
+RUN choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=User' \
+       && choco install -y visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools" || IF "%ERRORLEVEL%"=="3010" EXIT 0   
 
 WORKDIR C:/build
 COPY . C:/build
 
-SHELL ["cmd", "/S", "/C"]
 RUN dir /s /b C:\BuildTools 
-RUN call "C:\BuildTools\Common7\Tools\VsDevCmd.bat" && cmake -G "Visual Studio 15 2017 Win64" . && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
+RUN call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat" \
+     && cmake -G "Visual Studio 15 2017 Win64" . 
+     && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
 
 ENTRYPOINT [ "C:/build/hello.exe" ]
 
