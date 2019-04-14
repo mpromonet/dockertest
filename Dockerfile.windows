@@ -1,13 +1,13 @@
-FROM  microsoft/windowsservercore
+FROM microsoft/dotnet-framework
 
 RUN powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SETX PATH "%PATH%;%ALLUSERSPROFILE%\chocolatey\bin" 
 RUN choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=User' \
-       && choco install -y visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools" || IF "%ERRORLEVEL%"=="3010" EXIT 0   
+       && choco install -y visualstudio2017buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --nocache --installPath C:\BuildTools" || IF "%ERRORLEVEL%"=="3010" EXIT 0   
 
 WORKDIR C:/build
 COPY . C:/build
 
-RUN call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat" \
+RUN call "C:\BuildTools\VC\Auxiliary\Build\vcvars64.bat" \
      && cmake -G "Visual Studio 15 2017 Win64" . \
      && msbuild hello.sln /p:Configuration=Release /p:Platform=x64
 
