@@ -1,5 +1,6 @@
 windows_docker_builder:
   platform: windows
+  os_version: 2019
   script: |
     docker info
     docker build -t %CIRRUS_REPO_FULL_NAME%:windows . -f Dockerfile.windows
