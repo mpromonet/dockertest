@@ -21,8 +21,8 @@ publish_docker_builder:
     - linux
     - windows
   env:
-    DOCKERHUB_USER: ENCRYPTED[ccd1af2835558f6b3e08fa3dd8ad95e7b3eaf3b83220433093d6335a3f4727f4c53c4053587d1594799e72e331d1017d]
-    DOCKERHUB_PASS: ENCRYPTED[7b81d2ca7878761ea497619cae892e267c0e0fdee71d8ce48dcd4ba11b9351a9d3f2f781dce84a7f8aab92a278007509]
+    DOCKERHUB_USER: ENCRYPTED[80c86842f51e89eebd33a709eda8406f47194be550338b4eb04ac307c03c67b1f30bbc82032f58aeb86dbc0f1e8752ff]
+    DOCKERHUB_PASS: ENCRYPTED[8c8912da52400d309e2fb75444639dfe774b210feaa5f1701e7a3f6e37959971ba41f9e5845c77138ea24ae34e90e248]
   script: | 
     mkdir -p ~/.docker
     echo "{ \"experimental\": \"enabled\" }" >> ~/.docker/config.json
