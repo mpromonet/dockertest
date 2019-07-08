@@ -38,7 +38,6 @@ publish_docker_builder:
   env:
     DOCKERHUB_USER: ENCRYPTED[80c86842f51e89eebd33a709eda8406f47194be550338b4eb04ac307c03c67b1f30bbc82032f58aeb86dbc0f1e8752ff]
     DOCKERHUB_PASS: ENCRYPTED[8c8912da52400d309e2fb75444639dfe774b210feaa5f1701e7a3f6e37959971ba41f9e5845c77138ea24ae34e90e248]
-    DOCKER_CLI_EXPERIMENTAL: enabled
   script: | 
     docker info
     docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS 
