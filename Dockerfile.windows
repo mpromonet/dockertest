@@ -11,6 +11,7 @@ COPY . C:/build
 RUN call "C:\BuildTools\VC\Auxiliary\Build\vcvars64.bat" \
      && cmake -G "Visual Studio 15 2017 Win64" . \
      && msbuild hello.sln /p:Configuration=Release /p:Platform=x64 \
+     && copy Release/hello.exe . \
      && hello.exe
 
 ENTRYPOINT [ "hello.exe" ]
