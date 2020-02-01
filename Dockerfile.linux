@@ -3,7 +3,9 @@ WORKDIR /build
 COPY . /build
 
 RUN apt-get update && apt-get install --no-install-recommends -y make cmake g++ git \
-    && git describe --tags --always --dirty \
+    && echo "GIT:$(git describe --tags --always --dirty)" \
+    && git fetch --tags \
+    && echo "GIT:$(git describe --tags --always --dirty)" \
     && cmake . \
     && make
 
