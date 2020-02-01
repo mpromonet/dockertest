@@ -2,7 +2,8 @@ FROM debian as builder
 WORKDIR /build
 COPY . /build
 
-RUN apt-get update && apt-get install --no-install-recommends -y make cmake g++ \
+RUN apt-get update && apt-get install --no-install-recommends -y make cmake g++ git \
+    && git describe --tags --always --dirty \
     && cmake . \
     && make
 
