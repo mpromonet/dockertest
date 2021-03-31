@@ -6,6 +6,7 @@ windows_docker_builder:
     DOCKERHUB_PASS: ENCRYPTED[8c8912da52400d309e2fb75444639dfe774b210feaa5f1701e7a3f6e37959971ba41f9e5845c77138ea24ae34e90e248]  
   script: |
     docker info
+    docker ps -a
     docker build -t %CIRRUS_REPO_FULL_NAME%:windows . -f Dockerfile.windows
     docker login --username=%DOCKERHUB_USER% --password=%DOCKERHUB_PASS% 
     docker push %CIRRUS_REPO_FULL_NAME%:windows    
@@ -25,6 +26,7 @@ linux_docker_builder:
     fi  
   script: |
     docker info
+    docker ps -a
     docker build -t $CIRRUS_REPO_FULL_NAME:linux . -f Dockerfile.linux
     docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS 
     docker push $CIRRUS_REPO_FULL_NAME:linux
@@ -59,6 +61,7 @@ publish_docker_builder:
     DOCKER_CLI_EXPERIMENTAL: enabled
   script: | 
     docker info
+    docker ps -a
     docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS 
     docker manifest create --amend $CIRRUS_REPO_FULL_NAME:latest $CIRRUS_REPO_FULL_NAME:linux  $CIRRUS_REPO_FULL_NAME:rpi  $CIRRUS_REPO_FULL_NAME:windows
     docker manifest push $CIRRUS_REPO_FULL_NAME:latest -p
