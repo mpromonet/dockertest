@@ -19,9 +19,12 @@ jobs:
       run: env
     - name: ref
       run: echo ${{github.ref}}
+    - name: master
+      if: contains(github.ref, 'refs/heads/master')
+      run: echo master      
 
     - name: Upload
-      if: contains('refs/tags', github.ref)
+      if: contains(github.ref, 'refs/tags')
       uses: skx/github-action-publish-binaries@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
