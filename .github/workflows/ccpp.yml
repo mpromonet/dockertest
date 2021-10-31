@@ -15,6 +15,10 @@ jobs:
       run: cmake .
     - name: make
       run: make
+    - name: info
+      run: env
+    - name: ref
+      run: echo ${{github.ref}}
 
     - name: Upload
       if: contains('refs/tags', github.ref)
