@@ -1,22 +1,11 @@
 version: 1.0.{build}
 image: 
 - Ubuntu
-- Visual Studio 2017
 - macos
 
-environment:
-  DOCKER_USER:
-    secure: x9TrGhfASxIJGqdfTG6LHg==
-  DOCKER_PASS:
-    secure: 8A704idfyG3NBIoN4mx5VmOukFzwSphXRHpzuCdPc3E=
-install:
-  - docker version
+
 
 build_script:
-  - sh: docker build -t mpromonet/dockertest:linux . -f Dockerfile.linux
-  - cmd: docker build -t mpromonet/dockertest:windows . -f Dockerfile.windows
+  - sh: cmake .
+  - sh: make
 
-deploy_script:
-  - ps: echo $env:DOCKER_PASS | docker login -u="$env:DOCKER_USER" --password-stdin
-  - sh: docker push mpromonet/dockertest:linux
-  - cmd: docker push mpromonet/dockertest:windows
