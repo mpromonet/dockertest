@@ -2,6 +2,7 @@ version: 1.0.{build}
 image: 
 - Ubuntu
 - Visual Studio 2017
+- macos
 
 environment:
   DOCKER_USER:
