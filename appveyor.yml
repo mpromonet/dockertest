@@ -6,6 +6,7 @@ image:
 
 
 build_script:
+  - sh: env
   - sh: cmake .
   - sh: make
 
